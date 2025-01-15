@@ -1,0 +1,90 @@
+[project]
+authors = ["Matthew Feickert <matthew.feickert@cern.ch>"]
+channels = ["conda-forge"]
+description = "Explore NEON open data with JupyterGIS"
+name = "jupytergis-neon-open-data-exploration"
+platforms = ["linux-64", "osx-arm64"]
+version = "0.1.0"
+
+[tasks.download]
+description = "Download NEON domains from https://www.neonscience.org/data-samples/data/spatial-data-maps"
+# c.f. https://www.neonscience.org/data-samples/data/spatial-data-maps
+cmd = """
+mkdir -p data && \
+cd data && \
+curl -sLO https://www.neonscience.org/sites/default/files/NEONDomains_2024.zip && \
+rm -rf NEONDomains_2024 && \
+unzip NEONDomains_2024.zip && \
+curl -sLO https://www.neonscience.org/sites/default/files/Field_Sampling_Boundaries_2024.zip && \
+rm -rf Field_Sampling_Boundaries_2024 && \
+unzip Field_Sampling_Boundaries_2024.zip && \
+curl -sLO https://www.neonscience.org/sites/default/files/All_NEON_TOS_Plots_V11.zip && \
+rm -rf All_NEON_TOS_Plots_V11 && \
+unzip All_NEON_TOS_Plots_V11.zip && \
+curl -sLO https://www.neonscience.org/sites/default/files/NEONAquaticWatershed_1.zip && \
+rm -rf NEONAquaticWatershed && \
+unzip NEONAquaticWatershed_1.zip && \
+curl -sLO https://github.com/geojupyter/jupytergis/raw/refs/heads/main/examples/buildings.qgz
+"""
+
+[tasks.convert]
+description = "Convert the shapefiles into GeoJSON for JupyterGIS to read"
+cmd = """
+ogrinfo ./data/NEONDomains_2024/NEON_Domains.shp && \
+ogrinfo ./data/Field_Sampling_Boundaries_2024/terrestrialSamplingBoundaries.shp && \
+ogrinfo ./data/All_NEON_TOS_Plots_V11/All_NEON_TOS_Plot_Points_V11.shp && \
+ogrinfo ./data/All_NEON_TOS_Plots_V11/All_NEON_TOS_Plot_Centroids_V11.shp && \
+ogrinfo ./data/All_NEON_TOS_Plots_V11/All_NEON_TOS_Plot_Polygons_V11.shp && \
+ogrinfo ./data/All_NEON_TOS_Plots_V11/All_NEON_TOS_Plot_Subplots_V11.shp && \
+ogrinfo ./data/NEONAquaticWatershed/NEON_Aquatic_DrainageLine.shp && \
+ogrinfo ./data/NEONAquaticWatershed/NEON_Aquatic_PourPoint.shp && \
+ogrinfo ./data/NEONAquaticWatershed/NEON_Aquatic_Watershed.shp && \
+ogr2ogr -f GeoJSON ./data/neon_domains_2024.json ./data/NEONDomains_2024/NEON_Domains.shp && \
+ogr2ogr -f GeoJSON ./data/terrestrial_sampling_boundaries.json ./data/Field_Sampling_Boundaries_2024/terrestrialSamplingBoundaries.shp && \
+ogr2ogr -f GeoJSON ./data/neon_tos_plot_points_v11.json ./data/All_NEON_TOS_Plots_V11/All_NEON_TOS_Plot_Points_V11.shp && \
+ogr2ogr -f GeoJSON ./data/neon_tos_plot_centroids_v11.json ./data/All_NEON_TOS_Plots_V11/All_NEON_TOS_Plot_Centroids_V11.shp && \
+ogr2ogr -f GeoJSON ./data/neon_tos_plot_polygons_v11.json ./data/All_NEON_TOS_Plots_V11/All_NEON_TOS_Plot_Polygons_V11.shp && \
+ogr2ogr -f GeoJSON ./data/neon_tos_plot_subplots_v11.json ./data/All_NEON_TOS_Plots_V11/All_NEON_TOS_Plot_Subplots_V11.shp && \
+ogr2ogr -f GeoJSON ./data/neon_aquatic_drainage_line.json ./data/NEONAquaticWatershed/NEON_Aquatic_DrainageLine.shp && \
+ogr2ogr -f GeoJSON ./data/neon_aquatic_pour_point.json ./data/NEONAquaticWatershed/NEON_Aquatic_PourPoint.shp && \
+ogr2ogr -f GeoJSON ./data/neon_aquatic_watershed.json ./data/NEONAquaticWatershed/NEON_Aquatic_Watershed.shp && \
+ogrinfo ./data/neon_domains_2024.json && \
+ogrinfo ./data/terrestrial_sampling_boundaries.json && \
+ogrinfo ./data/neon_tos_plot_points_v11.json && \
+ogrinfo ./data/neon_tos_plot_centroids_v11.json && \
+ogrinfo ./data/neon_tos_plot_polygons_v11.json && \
+ogrinfo ./data/neon_tos_plot_subplots_v11.json && \
+ogrinfo ./data/neon_aquatic_drainage_line.json && \
+ogrinfo ./data/neon_aquatic_pour_point.json && \
+ogrinfo ./data/neon_aquatic_watershed.json
+"""
+
+[tasks.jupytext-to-notebook]
+description = "Generate notebook file from example.py"
+cmd = """
+jupytext --to ipynb example.py
+"""
+
+[tasks.lab]
+description = "Launch Jupyter Lab"
+cmd = """
+jupyter lab
+"""
+
+[tasks.clean]
+description = "Remove state artifacts"
+cmd = """
+rm -rf .jupyter_ystore.db && \
+rm -rf .ipynb_checkpoints
+"""
+
+[tasks.start]
+description = "Start exploring"
+depends-on = ["download", "convert", "jupytext-to-notebook", "lab"]
+
+[dependencies]
+jupytergis = ">=0.2.1,<0.3"
+qgis = ">=3.40.2,<4"
+curl = ">=8.11.1,<9"
+unzip = ">=6.0,<7"
+jupytext = ">=1.16.6,<2"
