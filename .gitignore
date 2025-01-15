@@ -177,3 +177,5 @@ cython_debug/
 # notebooks
 *.ipynb
 data/
+# JupyterGIS
+*.db
