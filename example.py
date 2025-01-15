@@ -1,23 +1,32 @@
 # ---
 # jupyter:
+#   jupytext:
+#     text_representation:
+#       extension: .py
+#       format_name: percent
+#       format_version: '1.3'
+#       jupytext_version: 1.16.6
 #   kernelspec:
 #     display_name: Python 3 (ipykernel)
 #     language: python
 #     name: python3
 # ---
 
+# %% [markdown]
 # # Exploration of NEON Spatial Data & Maps open data with JupyterGIS
 
+# %%
 from jupytergis_lab import GISDocument
 from pathlib import Path
 
+# %% [markdown]
 # The data visualized is [National Ecological Observatory Network (NEON) shapefile open data](https://www.neonscience.org/data-samples/data/spatial-data-maps) converted into [GeoJSON](https://geojson.org/) for:
 # * NEON scientific domains
 # * Terrestrial field site boundaries
 # * Terrestrial observation system sampling locations
 # * Aquatic sites watersheds
 
-# + editable=true slideshow={"slide_type": ""}
+# %% editable=true slideshow={"slide_type": ""}
 data_path = Path.cwd() / "data"
 
 doc = GISDocument(latitude="38.7946", longitude="-106.5348", zoom="2.8")
@@ -44,6 +53,3 @@ doc.add_geojson_layer(path=str(data_path / "neon_tos_plot_polygons_v11.json"))
 doc.add_geojson_layer(path=str(data_path / "neon_aquatic_watershed.json"))
 
 doc
-# -
-
-
