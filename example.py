@@ -26,7 +26,7 @@ from pathlib import Path
 # * Terrestrial observation system sampling locations
 # * Aquatic sites watersheds
 
-# %% slideshow={"slide_type": ""} editable=true
+# %% editable=true slideshow={"slide_type": ""}
 data_path = Path.cwd() / "data"
 
 doc = GISDocument(latitude="38.7946", longitude="-106.5348", zoom="2.8")
