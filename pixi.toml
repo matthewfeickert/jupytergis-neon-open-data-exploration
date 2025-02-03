@@ -83,7 +83,7 @@ description = "Start exploring"
 depends-on = ["download", "convert", "jupytext-to-notebook", "lab"]
 
 [dependencies]
-jupytergis = ">=0.2.1,<0.3"
+jupytergis = ">=0.3.0,<0.4.0"
 qgis = ">=3.40.2,<4"
 curl = ">=8.11.1,<9"
 unzip = ">=6.0,<7"
