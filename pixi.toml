@@ -97,7 +97,7 @@ mkdir -p lite && \
 jupytext --to notebook --output lite/example.ipynb example.py && \
 cp -r data lite/ && \
 jupyter lite init && \
-jupyter lite build --contents=lite && \
+jupyter lite build --contents lite && \
 jupyter lite check
 """
 inputs = ["example.py"]
