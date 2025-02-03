@@ -38,18 +38,18 @@ doc.add_raster_layer(
 )
 
 # domains
-doc.add_geojson_layer(path=str(data_path / "neon_domains_2024.json"))
+doc.add_geojson_layer(path=data_path / "neon_domains_2024.json")
 
 # terrestrial field site boundaries
-doc.add_geojson_layer(path=str(data_path / "terrestrial_sampling_boundaries.json"))
+doc.add_geojson_layer(path=data_path / "terrestrial_sampling_boundaries.json")
 
 # terrestrial observation system sampling locations
-# doc.add_geojson_layer(path=str(data_path / "neon_tos_plot_points_v11.json"))
-# doc.add_geojson_layer(path=str(data_path / "neon_tos_plot_centroids_v11.json"))
-doc.add_geojson_layer(path=str(data_path / "neon_tos_plot_polygons_v11.json"))
-# doc.add_geojson_layer(path=str(data_path / "neon_tos_plot_subplots_v11.json"))
+# doc.add_geojson_layer(path=data_path / "neon_tos_plot_points_v11.json")
+# doc.add_geojson_layer(path=data_path / "neon_tos_plot_centroids_v11.json")
+doc.add_geojson_layer(path=data_path / "neon_tos_plot_polygons_v11.json")
+# doc.add_geojson_layer(path=data_path / "neon_tos_plot_subplots_v11.json")
 
 # aquatic sites watersheds
-doc.add_geojson_layer(path=str(data_path / "neon_aquatic_watershed.json"))
+doc.add_geojson_layer(path=data_path / "neon_aquatic_watershed.json")
 
 doc
