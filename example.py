@@ -16,7 +16,7 @@
 # # Exploration of NEON Spatial Data & Maps open data with JupyterGIS
 
 # %%
-from jupytergis_lab import GISDocument
+from jupytergis import GISDocument
 from pathlib import Path
 
 # %% [markdown]
