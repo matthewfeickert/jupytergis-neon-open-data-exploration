@@ -88,3 +88,36 @@ qgis = ">=3.40.3,<4"
 curl = ">=8.12.1,<9"
 unzip = ">=6.0,<7"
 jupytext = ">=1.16.7,<2"
+
+[feature.jupyterlite.tasks.build-lite]
+description = "Build JupyterLite version of notebook"
+cmd = """
+rm -rf lite && \
+mkdir -p lite && \
+jupytext --to notebook --output lite/example.ipynb example.py && \
+cp -r data lite/ && \
+jupyter lite init && \
+jupyter lite build --contents lite && \
+jupyter lite check
+"""
+inputs = ["example.py"]
+outputs = ["_output"]
+
+[feature.jupyterlite.tasks.serve]
+description = "Serve the built JupyterLite page"
+cmd = "jupyter lite serve"
+depends-on = ["build-lite"]
+
+[feature.jupyterlite.tasks.clean-lite]
+description = "Remove the JupyterLite outputs"
+cmd = """
+rm -rf .jupyterlite.doit.db _output
+"""
+
+[feature.jupyterlite.dependencies]
+jupyterlite = ">=0.5.1,<0.6"
+jupyterlite-pyodide-kernel = ">=0.5.2,<0.6"
+jupytergis-lite = ">=0.4.0,<0.5"
+
+[environments]
+jupyterlite = ["jupyterlite"]
