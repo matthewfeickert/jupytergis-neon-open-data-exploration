@@ -1,4 +1,4 @@
-[project]
+[workspace]
 authors = ["Matthew Feickert <matthew.feickert@cern.ch>"]
 channels = ["conda-forge"]
 description = "Explore NEON open data with JupyterGIS"
