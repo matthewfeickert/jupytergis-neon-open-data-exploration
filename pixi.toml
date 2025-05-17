@@ -1,4 +1,4 @@
-[project]
+[workspace]
 authors = ["Matthew Feickert <matthew.feickert@cern.ch>"]
 channels = ["conda-forge"]
 description = "Explore NEON open data with JupyterGIS"
@@ -83,8 +83,8 @@ description = "Start exploring"
 depends-on = ["download", "convert", "jupytext-to-notebook", "lab"]
 
 [dependencies]
-jupytergis = ">=0.4.0,<0.5"
+jupytergis = ">=0.5.0,<0.6"
 qgis = ">=3.40.3,<4"
-curl = ">=8.12.1,<9"
+curl = ">=8.13.0,<9"
 unzip = ">=6.0,<7"
-jupytext = ">=1.16.7,<2"
+jupytext = ">=1.17.1,<2"
